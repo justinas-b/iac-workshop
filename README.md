@@ -11,6 +11,7 @@ In the root directory create file terraform.tfvars with variables and appropriat
 ```
 owner = "john-snow"
 key_pair = "workshop-keypair"
+region = "eu-west-1"
 ```
 
 And then execute:

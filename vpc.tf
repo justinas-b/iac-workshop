@@ -1,19 +1,24 @@
 provider "aws" {
-  region = "eu-central-1"
+  region = "${var.region}"
 }
 
 // Some local variables
 locals {
+  generic_tag  = "${var.owner}-${terraform.workspace}"
   subnet_count = 4
-  subnet_size  = 16
+
   # IPs per subnet = subnet_size - 5; 
-  # Thus available IPs: 11
-  
-  dividor      = 2
-  generic_tag = "${var.owner}-${terraform.workspace}"
-  azs = "${list("eu-central-1a", "eu-central-1b")}"
-  public_subnet_count = "${local.subnet_count / local.dividor}"
-  private_subnet_count = "${local.subnet_count / local.dividor}"
+  # Therefore actually available IPs: 11
+  subnet_size = 16
+
+  # Divisor for separating subnet types, e.g. public and private
+  divisor = 2
+
+  public_subnet_count  = "${local.subnet_count / local.divisor}"
+  private_subnet_count = "${local.subnet_count / local.divisor}"
+
+  # We'll be using only "a" and "b" AZs for target region
+  azs = "${list("${var.region}a", "${var.region}b")}"
 }
 
 // A slice of network for each participant
@@ -35,28 +40,28 @@ resource "aws_internet_gateway" "igw" {
 }
 
 resource "aws_subnet" "public" {
-  count      = "${local.subnet_count}"
-  vpc_id     = "${aws_vpc.main.id}"
-  cidr_block = "10.0.0.${count.index * local.subnet_size}/28"
+  count                   = "${local.public_subnet_count}"
+  vpc_id                  = "${aws_vpc.main.id}"
+  cidr_block              = "10.0.0.${count.index * local.subnet_size}/28"
   map_public_ip_on_launch = true
-  availability_zone = "${element("${local.azs}", "${count.index}")}"
+  availability_zone       = "${element("${local.azs}", "${count.index}")}"
 
   tags {
     Name = "public-${local.generic_tag}-${count.index}"
   }
 }
 
-// resource "aws_subnet" "private" {
-//   count      = "${local.private_subnet_count}"
-//   vpc_id     = "${aws_vpc.main.id}"
-//   cidr_block = "10.0.0.${count.index * local.subnet_size + local.dividor}/28"
-//   map_public_ip_on_launch = false
-//   availability_zone = "${element("${local.azs}", "${count.index}")}"
+resource "aws_subnet" "private" {
+  count                   = "${local.private_subnet_count}"
+  vpc_id                  = "${aws_vpc.main.id}"
+  cidr_block              = "10.0.0.${(count.index + local.divisor) * local.subnet_size }/28"
+  map_public_ip_on_launch = false
+  availability_zone       = "${element("${local.azs}", "${count.index}")}"
 
-//   tags {
-//     Name = "private-${local.generic_tag}-${count.index - 1}"
-//   }
-// }
+  tags {
+    Name = "private-${local.generic_tag}-${count.index}"
+  }
+}
 
 resource "aws_eip" "nat" {
   vpc = true
@@ -67,9 +72,9 @@ resource "aws_eip" "nat" {
 }
 
 resource "aws_nat_gateway" "gw" {
-  // count = 2
+  count = 2
   allocation_id = "${aws_eip.nat.id}"
-  subnet_id     = "${aws_subnet.public.0.id}"
+  subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
 
   tags {
     Name = "${local.generic_tag}"
@@ -89,19 +94,15 @@ resource "aws_route_table" "public" {
   }
 }
 
-resource "aws_route" "r" {
-  route_table_id = "${aws_route_table.public.id}"
+resource "aws_route" "public" {
+  route_table_id         = "${aws_route_table.public.id}"
   destination_cidr_block = "0.0.0.0/0"
-  gateway_id         = "${aws_internet_gateway.igw.id}"
+  gateway_id             = "${aws_internet_gateway.igw.id}"
 }
 
-resource "aws_route_table_association" "a" {
-  subnet_id      = "${aws_subnet.public.2.id}"
-  route_table_id = "${aws_route_table.public.id}"
-}
-
-resource "aws_route_table_association" "b" {
-  subnet_id      = "${aws_subnet.public.3.id}"
+resource "aws_route_table_association" "public_subn" {
+  count          = "${local.public_subnet_count}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
   route_table_id = "${aws_route_table.public.id}"
 }
 
@@ -116,19 +117,14 @@ resource "aws_route_table" "private" {
   }
 }
 
-resource "aws_route" "c" {
-  route_table_id = "${aws_route_table.private.id}"
+resource "aws_route" "private" {
+  route_table_id         = "${aws_route_table.private.id}"
   destination_cidr_block = "0.0.0.0/0"
-  nat_gateway_id             = "${aws_nat_gateway.gw.id}"
+  nat_gateway_id         = "${aws_nat_gateway.gw.*.id}"
 }
 
-resource "aws_route_table_association" "c" {
-  subnet_id      = "${aws_subnet.public.0.id}"
+resource "aws_route_table_association" "private_subn" {
+  count          = "${local.private_subnet_count}"
+  subnet_id      = "${element(aws_subnet.private.*.id, count.index)}"
   route_table_id = "${aws_route_table.private.id}"
 }
-
-resource "aws_route_table_association" "d" {
-  subnet_id      = "${aws_subnet.public.1.id}"
-  route_table_id = "${aws_route_table.private.id}"
-}
-

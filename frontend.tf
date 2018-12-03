@@ -1,8 +1,7 @@
 # Defining some local variables
 locals {
-  compute_subnets = "${list("${aws_subnet.public.0.id}", "${aws_subnet.public.1.id}")}"
-  // alb_subnets = "${list("${aws_subnet.public.2.id}", "${aws_subnet.public.3.id}")}"
-  alb_subnets = ["${aws_subnet.public.2.id}", "${aws_subnet.public.3.id}"]
+  compute_subnets = ["${aws_subnet.private.*.id}"]
+  alb_subnets     = ["${aws_subnet.public.*.id}"]
 }
 
 //-----------------------------------------
@@ -35,6 +34,7 @@ resource "aws_launch_configuration" "as_conf" {
   key_name        = "${var.key_pair}"
   user_data       = "${file("${path.module}/user_data.sh")}"
   security_groups = ["${aws_security_group.asg.id}"]
+
   // Issue: https://github.com/hashicorp/terraform/issues/11349#issuecomment-437561823 
 }
 
@@ -59,11 +59,11 @@ resource "aws_lb_target_group" "alb_tg" {
 }
 
 resource "aws_lb" "load_balancer" {
-  name               = "${var.owner}-alb-${terraform.workspace}"
-  internal           = false
-  load_balancer_type = "application"
-  security_groups    = ["${aws_security_group.alb.id}"]
-  subnets            = ["${local.alb_subnets}"]
+  name                       = "${var.owner}-alb-${terraform.workspace}"
+  internal                   = false
+  load_balancer_type         = "application"
+  security_groups            = ["${aws_security_group.alb.id}"]
+  subnets                    = ["${local.alb_subnets}"]
   enable_deletion_protection = false
 
   tags {
