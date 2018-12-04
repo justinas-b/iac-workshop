@@ -8,13 +8,12 @@ locals {
   subnet_count = 4
 
   /*
-    IPs per subnet = subnet_size - 5; 
-    Therefore actually available IPs: 11
-  */
+      IPs per subnet = subnet_size - 5; 
+      Therefore actually available IPs: 11
+    */
   subnet_size = 16
 
-
-  cidr_vpc_mask = "${32 - log("${local.subnet_size * local.subnet_count}", 2)}"
+  cidr_vpc_mask    = "${32 - log("${local.subnet_size * local.subnet_count}", 2)}"
   cidr_subnet_mask = "${32 - log("${local.subnet_size}", 2)}"
 
   # Divisor for separating subnet types, e.g. public and private
@@ -73,7 +72,7 @@ resource "aws_subnet" "private" {
 
 resource "aws_eip" "nat" {
   count = "${local.public_subnet_count}"
-  vpc = true
+  vpc   = true
 
   tags {
     Name = "${local.generic_tag}"
@@ -81,7 +80,7 @@ resource "aws_eip" "nat" {
 }
 
 resource "aws_nat_gateway" "ngw" {
-  count = "${local.public_subnet_count}"
+  count         = "${local.public_subnet_count}"
   allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
   subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
 
@@ -119,7 +118,7 @@ resource "aws_route_table_association" "public_subn" {
 // Private subnet routing
 //-----------------------------------------
 resource "aws_route_table" "private" {
-  count = "${local.private_subnet_count}"
+  count  = "${local.private_subnet_count}"
   vpc_id = "${aws_vpc.main.id}"
 
   tags {
