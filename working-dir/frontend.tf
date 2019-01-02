@@ -27,12 +27,20 @@ data "aws_ami" "ami" {
   }
 }
 
+data "template_file" "init" {
+  template = "${file("${path.module}/user_data.sh")}"
+
+  vars {
+    db_endpoint = "${aws_db_instance.default.address}"
+  }
+}
+
 resource "aws_launch_configuration" "as_conf" {
   name            = "${var.owner}-lc-${terraform.workspace}"
   image_id        = "${data.aws_ami.ami.id}"
   instance_type   = "t2.micro"
   key_name        = "${var.key_pair}"
-  user_data       = "${file("${path.module}/user_data.sh")}"
+  user_data       = "${data.template_file.init.rendered}"
   security_groups = ["${aws_security_group.asg.id}"]
 
   // Issue: https://github.com/hashicorp/terraform/issues/11349#issuecomment-437561823 
@@ -46,6 +54,7 @@ resource "aws_autoscaling_group" "asg" {
   desired_capacity     = 2
   target_group_arns    = ["${aws_lb_target_group.alb_tg.arn}"]
   vpc_zone_identifier  = ["${local.compute_subnets}"]
+  // depends_on = ["aws_db_instance.default"]
 }
 
 //-----------------------------------------
