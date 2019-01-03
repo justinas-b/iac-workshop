@@ -8,19 +8,20 @@ locals {
   subnet_count = "${pow("${var.subnet_bits}", 2)}"
 
   # Divisor for separating subnet types, e.g. public and private
-  divisor = 2  
+  divisor = 2
 
   # Public and private subnet count for compute tier
   public_subnet_count  = "${local.subnet_count / local.divisor}"
   private_subnet_count = "${local.subnet_count / local.divisor}"
 
   # We'll be using only "a" and "b" AZs for target region
-  azs = "${list("${var.region}a", "${var.region}b")}" 
+  azs = "${list("${var.region}a", "${var.region}b")}"
 }
 
 // A slice of network for each participant
 resource "aws_vpc" "main" {
   cidr_block = "${var.network}"
+
   tags {
     Name = "${local.generic_tag}"
   }

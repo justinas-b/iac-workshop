@@ -54,7 +54,30 @@ resource "aws_autoscaling_group" "asg" {
   desired_capacity     = 2
   target_group_arns    = ["${aws_lb_target_group.alb_tg.arn}"]
   vpc_zone_identifier  = ["${local.compute_subnets}"]
-  // depends_on = ["aws_db_instance.default"]
+  enabled_metrics = [
+    "GroupMinSize",
+    "GroupMaxSize",
+    "GroupDesiredCapacity",
+    "GroupInServiceInstances", 
+    "GroupPendingInstances",
+    "GroupStandbyInstances", 
+    "GroupTerminatingInstances",
+    "GroupTotalInstances"
+  ]
+}
+
+resource "aws_autoscaling_policy" "bat" {
+  name                   = "${local.generic_tag}-asg-policy"
+  adjustment_type        = "ChangeInCapacity"
+  autoscaling_group_name = "${aws_autoscaling_group.asg.name}"
+  policy_type = "TargetTrackingScaling"
+
+  target_tracking_configuration {
+  predefined_metric_specification {
+    predefined_metric_type = "ASGAverageCPUUtilization"
+  }
+  target_value = 40.0
+  }
 }
 
 //-----------------------------------------
