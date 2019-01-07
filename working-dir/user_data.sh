@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Line below is just an example
-echo "DB_ENDPOINT=${db_endpoint}" >> /tmp/rds_endpoint
-
 sudo yum update -y
 sudo yum install -y httpd php php-mysqlnd
 sudo service httpd start
@@ -19,7 +16,7 @@ sudo chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 sudo cp wp-config-sample.php wp-config.php
 sudo chmod 777 wp-config.php
-wp config set DB_NAME db_name
-wp config set DB_USER db_user
-wp config set DB_PASSWORD db_password
-wp config set DB_HOST db_endpoint
+wp config set DB_NAME ${db_name}
+wp config set DB_USER ${db_user}
+wp config set DB_PASSWORD ${db_password}
+wp config set DB_HOST ${db_endpoint}

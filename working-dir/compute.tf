@@ -32,6 +32,9 @@ data "template_file" "init" {
 
   vars {
     db_endpoint = "${aws_db_instance.default.address}"
+    db_name     = "${var.db_name}"
+    db_user     = "${var.db_user}"
+    db_password = "${var.db_password}"
   }
 }
 
@@ -54,15 +57,16 @@ resource "aws_autoscaling_group" "asg" {
   desired_capacity     = 2
   target_group_arns    = ["${aws_lb_target_group.alb_tg.arn}"]
   vpc_zone_identifier  = ["${local.compute_subnets}"]
+
   enabled_metrics = [
     "GroupMinSize",
     "GroupMaxSize",
     "GroupDesiredCapacity",
-    "GroupInServiceInstances", 
+    "GroupInServiceInstances",
     "GroupPendingInstances",
-    "GroupStandbyInstances", 
+    "GroupStandbyInstances",
     "GroupTerminatingInstances",
-    "GroupTotalInstances"
+    "GroupTotalInstances",
   ]
 }
 
@@ -70,13 +74,14 @@ resource "aws_autoscaling_policy" "bat" {
   name                   = "${local.generic_tag}-asg-policy"
   adjustment_type        = "ChangeInCapacity"
   autoscaling_group_name = "${aws_autoscaling_group.asg.name}"
-  policy_type = "TargetTrackingScaling"
+  policy_type            = "TargetTrackingScaling"
 
   target_tracking_configuration {
-  predefined_metric_specification {
-    predefined_metric_type = "ASGAverageCPUUtilization"
-  }
-  target_value = 40.0
+    predefined_metric_specification {
+      predefined_metric_type = "ASGAverageCPUUtilization"
+    }
+
+    target_value = 40.0
   }
 }
 
