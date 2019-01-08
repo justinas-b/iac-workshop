@@ -1,7 +1,28 @@
-# Defining some local variables
+provider "aws" {
+  region = "${var.region}"
+}
+
 locals {
-  compute_subnets = ["${aws_subnet.private.*.id}"]
-  alb_subnets     = ["${aws_subnet.public.*.id}"]
+  generic_tag  = "${var.owner}-${terraform.workspace}"
+}
+
+
+data "terraform_remote_state" "vpc" {
+  backend = "s3"
+  config {
+    bucket = "john-snow-state-437278685207"
+    key    = "workshop/vpc/terraform.tfstate"
+    region = "eu-central-1"
+  }
+}
+
+data "terraform_remote_state" "data" {
+  backend = "s3"
+  config {
+    bucket = "john-snow-state-437278685207"
+    key    = "workshop/data/terraform.tfstate"
+    region = "eu-central-1"
+  }
 }
 
 //-----------------------------------------
@@ -31,7 +52,7 @@ data "template_file" "init" {
   template = "${file("${path.module}/user_data.sh")}"
 
   vars {
-    db_endpoint = "${aws_db_instance.default.address}"
+    db_endpoint = "${data.terraform_remote_state.data.db_endpoint}"
     db_name     = "${var.db_name}"
     db_user     = "${var.db_user}"
     db_password = "${var.db_password}"
@@ -44,7 +65,7 @@ resource "aws_launch_configuration" "as_conf" {
   instance_type   = "t2.micro"
   key_name        = "${var.key_pair}"
   user_data       = "${data.template_file.init.rendered}"
-  security_groups = ["${aws_security_group.asg.id}"]
+  security_groups = ["${data.terraform_remote_state.vpc.asg_sg_id}"]
 
   // Issue: https://github.com/hashicorp/terraform/issues/11349#issuecomment-437561823 
 }
@@ -56,7 +77,7 @@ resource "aws_autoscaling_group" "asg" {
   max_size             = 4
   desired_capacity     = 2
   target_group_arns    = ["${aws_lb_target_group.alb_tg.arn}"]
-  vpc_zone_identifier  = ["${local.compute_subnets}"]
+  vpc_zone_identifier  = ["${data.terraform_remote_state.vpc.private_compute_subnets}"]
 
   enabled_metrics = [
     "GroupMinSize",
@@ -91,15 +112,15 @@ resource "aws_lb_target_group" "alb_tg" {
   name     = "${var.owner}-lb-tg-${terraform.workspace}"
   port     = 80
   protocol = "HTTP"
-  vpc_id   = "${aws_vpc.main.id}"
+  vpc_id   = "${data.terraform_remote_state.vpc.vpc_id}"
 }
 
 resource "aws_lb" "load_balancer" {
   name                       = "${var.owner}-alb-${terraform.workspace}"
   internal                   = false
   load_balancer_type         = "application"
-  security_groups            = ["${aws_security_group.alb.id}"]
-  subnets                    = ["${local.alb_subnets}"]
+  security_groups            = ["${data.terraform_remote_state.vpc.alb_sg_id}"]
+  subnets                    = ["${data.terraform_remote_state.vpc.public_subnets}"]
   enable_deletion_protection = false
 
   tags {

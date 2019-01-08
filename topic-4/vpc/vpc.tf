@@ -62,25 +62,17 @@ resource "aws_subnet" "private" {
   }
 }
 
-resource "aws_eip" "nat" {
-  count = "${local.public_subnet_count}"
-  vpc   = true
+// Private type subnets for database
+resource "aws_subnet" "db_private" {
+  count                   = "${local.private_db_subnet_count}"
+  vpc_id                  = "${aws_vpc.main.id}"
+  cidr_block              = "${cidrsubnet("${var.network}", "${var.subnet_bits}", count.index + local.divisor)}"
+  map_public_ip_on_launch = false
+  availability_zone       = "${element("${local.azs}", "${count.index}")}"
 
   tags {
-    Name = "${local.generic_tag}"
+    Name = "private-db-${local.generic_tag}-${count.index}"
   }
-}
-
-resource "aws_nat_gateway" "ngw" {
-  count         = "${local.public_subnet_count}"
-  allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
-  subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
-
-  tags {
-    Name = "${local.generic_tag}-${count.index}"
-  }
-
-  depends_on = ["aws_internet_gateway.igw"]
 }
 
 //-----------------------------------------
@@ -207,4 +199,28 @@ resource "aws_security_group_rule" "ec2_2_public" {
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = "${aws_security_group.asg.id}"
+}
+
+//-----------------------------------------
+// NGW for instances in private subnets
+//-----------------------------------------
+resource "aws_eip" "nat" {
+  count = "${local.public_subnet_count}"
+  vpc   = true
+
+  tags {
+    Name = "${local.generic_tag}"
+  }
+}
+
+resource "aws_nat_gateway" "ngw" {
+  count         = "${local.public_subnet_count}"
+  allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
+  subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
+
+  tags {
+    Name = "${local.generic_tag}-${count.index}"
+  }
+
+  depends_on = ["aws_internet_gateway.igw"]
 }
