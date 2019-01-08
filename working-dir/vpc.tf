@@ -8,11 +8,12 @@ locals {
   subnet_count = "${pow("${var.subnet_bits}", 2)}"
 
   # Divisor for separating subnet types, e.g. public and private
-  divisor = 2
+  divisor = 4
 
   # Public and private subnet count for compute tier
   public_subnet_count  = "${local.subnet_count / local.divisor}"
   private_subnet_count = "${local.subnet_count / local.divisor}"
+  private_db_subnet_count = "${local.subnet_count / local.divisor}"
 
   # We'll be using only "a" and "b" AZs for target region
   azs = "${list("${var.region}a", "${var.region}b")}"
@@ -52,34 +53,26 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   count                   = "${local.private_subnet_count}"
   vpc_id                  = "${aws_vpc.main.id}"
+  cidr_block              = "${cidrsubnet("${var.network}", "${var.subnet_bits}", count.index + local.divisor / 2)}"
+  map_public_ip_on_launch = false
+  availability_zone       = "${element("${local.azs}", "${count.index}")}"
+
+  tags {
+    Name = "private-compute-${local.generic_tag}-${count.index}"
+  }
+}
+
+// Private type subnets for compute
+resource "aws_subnet" "db_private" {
+  count                   = "${local.private_db_subnet_count}"
+  vpc_id                  = "${aws_vpc.main.id}"
   cidr_block              = "${cidrsubnet("${var.network}", "${var.subnet_bits}", count.index + local.divisor)}"
   map_public_ip_on_launch = false
   availability_zone       = "${element("${local.azs}", "${count.index}")}"
 
   tags {
-    Name = "private-${local.generic_tag}-${count.index}"
+    Name = "private-db-${local.generic_tag}-${count.index}"
   }
-}
-
-resource "aws_eip" "nat" {
-  count = "${local.public_subnet_count}"
-  vpc   = true
-
-  tags {
-    Name = "${local.generic_tag}"
-  }
-}
-
-resource "aws_nat_gateway" "ngw" {
-  count         = "${local.public_subnet_count}"
-  allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
-  subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
-
-  tags {
-    Name = "${local.generic_tag}-${count.index}"
-  }
-
-  depends_on = ["aws_internet_gateway.igw"]
 }
 
 //-----------------------------------------
@@ -128,4 +121,28 @@ resource "aws_route_table_association" "private_subn" {
   count          = "${local.private_subnet_count}"
   subnet_id      = "${element(aws_subnet.private.*.id, count.index)}"
   route_table_id = "${element(aws_route_table.private.*.id, count.index)}"
+}
+
+//-----------------------------------------
+// NGW for instances in private subnets
+//-----------------------------------------
+resource "aws_eip" "nat" {
+  count = "${local.public_subnet_count}"
+  vpc   = true
+
+  tags {
+    Name = "${local.generic_tag}"
+  }
+}
+
+resource "aws_nat_gateway" "ngw" {
+  count         = "${local.public_subnet_count}"
+  allocation_id = "${element(aws_eip.nat.*.id, count.index)}"
+  subnet_id     = "${element(aws_subnet.public.*.id, count.index)}"
+
+  tags {
+    Name = "${local.generic_tag}-${count.index}"
+  }
+
+  depends_on = ["aws_internet_gateway.igw"]
 }
