@@ -1,11 +1,11 @@
 # TBC
 
-1. Copy all .tf and .sh files from directory topic-2 to your working-dir
+**1.** Copy all .tf and .sh files from directory topic-2 to your working-dir
 ```bash
 cp ../topic-2/*.tf ./
 ```
 
-2. Execute terraform plan. Since we've added a new provider, you'll get an error similar as below. 
+**2.** Execute terraform plan. Since we've added a new provider, you'll get an error similar as below. 
 
 ```bash
 terraform plan
@@ -39,10 +39,9 @@ Error: error satisfying plugin requirements
 ```
 </p>
 </details>
+\
 
-
-
-3. As you can see, it's complaining about missing *template* provider. You need to execute *terraform init* each time you 
+**3.** As you can see, it's complaining about missing *template* provider. You need to execute *terraform init* each time you 
 add new providers or change backend (more on that later). It's safe to run *terraform init* multiple times.
 
 ```bash
@@ -84,7 +83,7 @@ commands will detect it and remind you to do so if necessary.
 </details>
 
 
-4. Execute terraform plan, check what changes are going to be made and apply.
+**4.** Execute terraform plan, check what changes are going to be made and apply.
 
 ```bash
  $ terraform plan
