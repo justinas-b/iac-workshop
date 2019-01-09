@@ -14,10 +14,13 @@ In the directory **"working-dir"** create file terraform.tfvars with variables a
 
 ```
 owner = "john-snow"
-key_pair = "workshop-keypair"
-region = "eu-west-1"
-network = "10.0.0.0/26"
-subnet_bits = 2
+key_pair = "frankfurt-ignas"
+region = "eu-central-1"
+network = "10.0.0.0/25"
+subnet_bits = 3
+db_name = "wordpress_db"
+db_user = "admin"
+db_password = "adminpwd"
 ```
 
 And then execute:

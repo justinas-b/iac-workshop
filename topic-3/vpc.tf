@@ -83,7 +83,7 @@ resource "aws_nat_gateway" "ngw" {
   depends_on = ["aws_internet_gateway.igw"]
 }
 
-// Private type subnets for compute
+// Private type subnets for database
 resource "aws_subnet" "db_private" {
   count                   = "${local.private_db_subnet_count}"
   vpc_id                  = "${aws_vpc.main.id}"

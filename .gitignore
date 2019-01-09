@@ -4,3 +4,4 @@
 */*.terraform/*
 .terraorm.d/*
 *tfplan
+.idea
