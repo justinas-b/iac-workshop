@@ -41,6 +41,7 @@ Error: error satisfying plugin requirements
 </details>
 
 
+
 3. As you can see, it's complaining about missing *template* provider. You need to execute *terraform init* each time you 
 add new providers or change backend (more on that later). It's safe to run *terraform init* multiple times.
 
