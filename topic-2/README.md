@@ -4,7 +4,15 @@
 ```bash
 cp ../topic-2/*.tf ./
 ```
+
 2. Execute terraform plan. Since we've added a new provider, you'll get an error similar as below. 
+
+```bash
+terraform plan
+```
+
+<details><summary>Click here to expand</summary>
+<p>
 
 ```bash
  $ terraform plan
@@ -29,9 +37,19 @@ requirements and constraints from each module, run "terraform providers".
 Error: error satisfying plugin requirements
 
 ```
+</p>
+</details>
+
 
 3. As you can see, it's complaining about missing *template* provider. You need to execute *terraform init* each time you 
 add new providers or change backend (more on that later). It's safe to run *terraform init* multiple times.
+
+```bash
+terraform init
+```
+
+<details><summary>Click here to expand</summary>
+<p>
 
 ```bash
 ) $ terraform init
@@ -61,14 +79,24 @@ If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
+</p>
+</details>
+
 
 4. Execute terraform plan, check what changes are going to be made and apply.
+
+```bash
+ $ terraform plan
+ $ terraform apply
+
+```
 
 <details><summary>Click here to expand</summary>
 <p>
 
 ```bash
-
+...
+[ Some output removed ]
 ...
   
 + aws_security_group_rule.ssh_access
@@ -96,6 +124,7 @@ commands will detect it and remind you to do so if necessary.
  $ terraform apply
  
  ...
+ [ Some output removed ]
  ...
  
  Do you want to perform these actions?
@@ -111,6 +140,7 @@ commands will detect it and remind you to do so if necessary.
    ingress.#:              "" => "<computed>"
 
 ...
+[ Some output removed ]
 ...
 
  port:                              "" => "80"
@@ -126,7 +156,6 @@ alb_dns_name = arya-stark-alb-default-278267658.eu-central-1.elb.amazonaws.com
 alb_id = arn:aws:elasticloadbalancing:eu-central-1:437278685207:loadbalancer/app/arya-stark-alb-default/bd11de57716f17a0
 vpc_id = vpc-0faf9cf26d5246000
 
- 
 ```
 </p>
 </details>
