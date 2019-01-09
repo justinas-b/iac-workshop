@@ -12,5 +12,10 @@ php wp-cli.phar --info
 sudo chmod +x wp-cli.phar
 sudo mv wp-cli.phar /usr/local/bin/wp
 wp core download
-wp core config --dbname=databasename --dbuser=databaseuser --dbpass=databasepassword --dbhost=localhost --dbprefix=prfx_
+sudo cp wp-config-sample.php wp-config.php
+sudo chmod 777 wp-config.php
+wp config set DB_NAME db_name
+wp config set DB_USER db_user
+wp config set DB_PASSWORD db_password
+wp config set DB_HOST db_host
 wp core install --url=example.com  --title="WordPress Website Title" --admin_user=admin --admin_password=admin --admin_email="admin@example.com"	
