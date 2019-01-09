@@ -11,7 +11,7 @@ cp ../topic-2/*.tf ./
 terraform plan
 ```
 
-<details><summary>Click here to expand</summary>
+<details><summary>Click here to expand for more details</summary>
 <p>
 
 ```bash
@@ -48,7 +48,7 @@ add new providers or change backend (more on that later). It's safe to run *terr
 terraform init
 ```
 
-<details><summary>Click here to expand</summary>
+<details><summary>Click here to expand for more details</summary>
 <p>
 
 ```bash
@@ -81,6 +81,7 @@ commands will detect it and remind you to do so if necessary.
 ```
 </p>
 </details>
+</br>
 
 
 **4.** Execute terraform plan, check what changes are going to be made and apply.
@@ -91,7 +92,7 @@ commands will detect it and remind you to do so if necessary.
 
 ```
 
-<details><summary>Click here to expand</summary>
+<details><summary>Click here to expand for more details</summary>
 <p>
 
 ```bash
@@ -159,4 +160,5 @@ vpc_id = vpc-0faf9cf26d5246000
 ```
 </p>
 </details>
+</br>
 
