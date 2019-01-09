@@ -35,6 +35,8 @@ data "template_file" "init" {
     db_name     = "${var.db_name}"
     db_user     = "${var.db_user}"
     db_password = "${var.db_password}"
+    alb_dns     = "${aws_lb.load_balancer.dns_name}"
+    owner       = "${var.owner}"
   }
 }
 

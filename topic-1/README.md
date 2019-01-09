@@ -17,7 +17,7 @@ You need to execute *terraform init* each time you add new providers or change b
 <details><summary>Click here to expand for more details</summary>
 <p>
 
-```bash
+```
  $ terraform init
 
 Initializing provider plugins...
@@ -54,13 +54,15 @@ commands will detect it and remind you to do so if necessary.
 ```
 
 Examine the produced output. 
-How many resources are planned to be created? 
-Can you reference the resource attribute values in the plan to what is in the code? 
+ 
+ - How many resources are planned to be created? 
+ - Can you reference the resource attribute values in the plan to what is in the code? 
 
 <details><summary>Click here to expand for more details</summary>
 <p>
 
-```bash
+
+```
  $ terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -112,11 +114,12 @@ Terraform will perform the following actions:
 ```
 
 Examine the produced output. 
+ - How many and what outputs do you see? 
 
 <details><summary>Click here to expand for more details</summary>
 <p>
 
-```bash
+```
  $ terraform apply
 
 ...
