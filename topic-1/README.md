@@ -6,8 +6,15 @@
  $ cp ../topic-1/*.tf ./
 ```
 
+**2.** Examine the contents of the copied files and commit them to your forked repository.
 
-**2.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc.
+```bash
+ $ git status
+ $ git diff
+ $ git commit -am "Topic 1 files"
+```
+
+**3.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc.
 You need to execute *terraform init* each time you add new providers or change backend (more on that later). It's safe to run *terraform init* multiple times.
 
 ```bash
@@ -47,7 +54,7 @@ commands will detect it and remind you to do so if necessary.
 </details>
 </br>
 
-**3.** Create a terraform plan by executing:
+**4.** Create a terraform plan by executing:
 
 ```bash
  $ terraform plan
@@ -107,7 +114,7 @@ Terraform will perform the following actions:
 </details>
 </br>
 
-**4.** Apply terraform plan by executing:
+**5.** Apply terraform plan by executing:
 
 ```bash
  $ terraform apply

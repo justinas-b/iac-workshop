@@ -7,7 +7,15 @@ cp ../topic-2/*.sh ./
 
 ```
 
-**2.** Execute terraform plan. Since we've added a new provider, you'll get an error similar as below. 
+**2.** Examine what has changed in which files and commit changes to your forked repository.
+
+```bash
+ $ git status
+ $ git diff <path_to_file>
+ $ git commit -am "Topic 2 files and changes"
+```
+
+**3.** Execute terraform plan. Since we've added a new provider, you'll get an error similar as below. 
 
 ```bash
 terraform plan
@@ -43,7 +51,7 @@ Error: error satisfying plugin requirements
 </details>
 </br>
 
-**3.** As you can see, it's complaining about missing *template* provider. You need to execute *terraform init* each time you 
+**4.** As you can see, it's complaining about missing *template* provider. You need to execute *terraform init* each time you 
 add new providers or change backend (more on that later). It's safe to run *terraform init* multiple times.
 
 ```bash
@@ -86,7 +94,7 @@ commands will detect it and remind you to do so if necessary.
 </br>
 
 
-**4.** Execute terraform plan, examine what changes are going to be made and then apply.
+**5.** Execute terraform plan, examine what changes are going to be made and then apply.
 
 ```bash
  $ terraform plan
@@ -164,7 +172,7 @@ vpc_id = vpc-0faf9cf26d5246000
 </details>
 </br>
 
-**5.** In your browser open the provisioned application load balancer URL that was specified in **ald_dns_name** output value above. 
+**6.** In your browser open the provisioned application load balancer URL that was specified in **ald_dns_name** output value above. 
 
 You'll see Wordpress initial setup page to for database connection. However, currently we don't have a database to connect to. 
 We'll resolve this in the next lesson/topic :)
