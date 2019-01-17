@@ -10,18 +10,18 @@ locals {
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config {
-    bucket = "john-snow-state-437278685207"
+    bucket = "${var.state_bucket}"
     key    = "workshop/vpc/terraform.tfstate"
-    region = "eu-central-1"
+    region = "${var.region}"
   }
 }
 
 data "terraform_remote_state" "data" {
   backend = "s3"
   config {
-    bucket = "john-snow-state-437278685207"
+    bucket = "${var.state_bucket}"
     key    = "workshop/data/terraform.tfstate"
-    region = "eu-central-1"
+    region = "${var.region}"
   }
 }
 
@@ -56,6 +56,8 @@ data "template_file" "init" {
     db_name     = "${var.db_name}"
     db_user     = "${var.db_user}"
     db_password = "${var.db_password}"
+    alb_dns     = "${aws_lb.load_balancer.dns_name}"
+    owner       = "${var.owner}"
   }
 }
 
@@ -63,7 +65,6 @@ resource "aws_launch_configuration" "as_conf" {
   name            = "${var.owner}-lc-${terraform.workspace}"
   image_id        = "${data.aws_ami.ami.id}"
   instance_type   = "t2.micro"
-  key_name        = "${var.key_pair}"
   user_data       = "${data.template_file.init.rendered}"
   security_groups = ["${data.terraform_remote_state.vpc.asg_sg_id}"]
 
@@ -101,7 +102,7 @@ resource "aws_autoscaling_policy" "bat" {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
 
-    target_value = 40.0
+    target_value = 60.0
   }
 }
 

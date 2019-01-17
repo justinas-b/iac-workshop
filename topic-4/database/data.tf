@@ -6,9 +6,9 @@ provider "aws" {
 data "terraform_remote_state" "vpc" {
   backend = "s3"
   config {
-    bucket = "john-snow-state-437278685207"
+    bucket = "${var.state_bucket}"
     key    = "workshop/vpc/terraform.tfstate"
-    region = "eu-central-1"
+    region = "${var.region}"
   }
 }
 

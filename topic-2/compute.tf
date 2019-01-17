@@ -35,7 +35,6 @@ resource "aws_launch_configuration" "as_conf" {
   name            = "${var.owner}-lc-${terraform.workspace}"
   image_id        = "${data.aws_ami.ami.id}"
   instance_type   = "t2.micro"
-  key_name        = "${var.key_pair}"
   user_data       = "${data.template_file.init.rendered}"
   security_groups = ["${aws_security_group.asg.id}"]
 
@@ -73,7 +72,7 @@ resource "aws_autoscaling_policy" "bat" {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
 
-    target_value = 40.0
+    target_value = 60.0
   }
 }
 

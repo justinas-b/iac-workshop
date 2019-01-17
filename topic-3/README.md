@@ -224,3 +224,5 @@ vpc_id = vpc-0dc49a0686a231015
 </details>
 </br>
 
+**8.** In your browser open your application load balancer dns URL "alb_dns_name" from the outputs section and you should 
+see WordPres welcome page.

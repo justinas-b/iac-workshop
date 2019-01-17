@@ -13,7 +13,7 @@
 executing command below. The only directory that should still be available is **.terraform**.
 
 ```bash
- $ rm ./*
+ $ rm ./*.tf && rm ./*.sh
  $ ls -al 
   total 0
   drwxr-xr-x   3 Ignas  staff   96 Jan 15 21:55 .
@@ -37,8 +37,9 @@ But before that we'll need update backend configuration where the terraform stat
 
 Let's start with the **vpc** configuration. 
 
-**4.1.** In vpc directory update **backend.tf** file with your bucket and key values. Pay close attention to the **key**
-value where path to terraform state file is specified. 
+**4.1.** In *vpc* directory update **backend.tf** file with your bucket and key values. Pay close attention to the **key**
+value where path to terraform state file is specified. Also, *bucket* and *region* values should be the same as defined
+in your *terraform.tfvars* file.
 
 ```hcl-terraform
 terraform {
@@ -68,4 +69,24 @@ terraform plan -out tfplan -var-file=../../terraform.tfvars
 terraform apply "tfplan"
 ```
 
-**5.1.**
+**5.** Repeat 4.1., 4.2., 4.3. steps for directories *database* and *compute* with appropriate values changed accordingly.
+
+**6.** If everything has been configured correctly, after provisioning *compute* layer you should should get similar output 
+as shown below. 
+
+```hcl-terraform
+  target_tracking_configuration.0.predefined_metric_specification.0.predefined_metric_type: "" => "ASGAverageCPUUtilization"
+  target_tracking_configuration.0.target_value:                                             "" => "40"
+aws_autoscaling_policy.bat: Creation complete after 1s (ID: john-snow-default-asg-policy)
+
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+alb_dns_name = john-snow-alb-default-1174222442.eu-central-1.elb.amazonaws.com
+alb_id = arn:aws:elasticloadbalancing:eu-central-1:749030158231:loadbalancer/app/john-snow-alb-default/3f626b7310531282
+
+```
+
+**7.** In your browser open your application load balancer dns URL "alb_dns_name" from the outputs section and you should 
+see WordPres welcome page.

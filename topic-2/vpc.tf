@@ -10,7 +10,7 @@ locals {
   # Divisor for separating subnet types, e.g. public and private
   divisor = 4
 
-  # Public and private subnet count for compute tier
+  # Public and private subnet count for frontend, app and data tiers
   public_subnet_count  = "${local.subnet_count / local.divisor}"
   private_subnet_count = "${local.subnet_count / local.divisor}"
   private_db_subnet_count = "${local.subnet_count / local.divisor}"
