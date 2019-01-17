@@ -7,36 +7,40 @@ This workshop is separated into several topics that cover various aspects of inf
 ![IaC workshop architecture](https://github.com/AmazingStuffPro/iac-workshop/blob/master/_docs/architecture.png?raw=true)
 
 ### Prerequisites
-You need to have terraform in your path, AWS account and credentials set in order to provision target infra.
+
+You need to have:
+ - This repo forked to your account
+ - Terraform in your path, AWS account and credentials set in order to provision target infra.
+   - Create a separate aws profile in your *~/.aws/credentials* file if this is not your default credentials:
+   ```bash
+     $ cat ~/.aws/credentials   
+    [iac-workshop-account]
+    aws_access_key_id = ******************
+    aws_secret_access_key = *************************************
+   ```   
+   
+   - Set environment variable for your new aws profile:
+   ```bash
+    $ export AWS_PROFILE=iac-workshop-account 
+   ```
+   
+
 
 ### Provisioning
 In the directory **"working-dir"** create file terraform.tfvars with variables and appropriate values according to your account:
 
 ```
 owner = "john-snow"
-key_pair = "workshop-keypair"
-region = "eu-west-1"
-network = "10.0.0.0/26"
-subnet_bits = 2
+region = "eu-central-1"
+network = "10.0.0.0/25"
+subnet_bits = 3
+db_name = "wordpress_db"
+db_user = "admin"
+db_password = "adminpwd"
+state_bucket = "john-snow-state-74***********"
 ```
+Note that db_password should be at least 8 char length. 
 
-And then execute:
+**DO NOT** commit your terraform.tfvars file to version control as it contains db_password value which is a sensitive data.
 
-```
-terraform init
-terraform plan
-terraform apply
-```
-And you'll get similar output as shown below:
-```
-...
-
-aws_lb_listener.front_end: Creation complete after 10s (ID: arn:aws:elasticloadbalancing:eu-central...ault/04f6e3fd44656f37/cffd81baa98f9f33)
-
-Apply complete! Resources: 33 added, 0 changed, 0 destroyed.
-
-Outputs:
-
-alb_dns_name = john-snow-alb-default-208374325.eu-central-1.elb.amazonaws.com
-alb_id = arn:aws:elasticloadbalancing:eu-central-1:437278685207:loadbalancer/app/john-snow-alb-default/032ef4304fe2db3f
-```
+Then follow the instructions in each topic.

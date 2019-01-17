@@ -14,8 +14,8 @@ sudo mv wp-cli.phar /usr/local/bin/wp
 wp core download
 sudo cp wp-config-sample.php wp-config.php
 sudo chmod 777 wp-config.php
-wp config set DB_NAME db_name
-wp config set DB_USER db_user
-wp config set DB_PASSWORD db_password
-wp config set DB_HOST db_host
-wp core install --url=example.com  --title="WordPress Website Title" --admin_user=admin --admin_password=admin --admin_email="admin@example.com"	
+wp config set DB_NAME ${db_name}
+wp config set DB_USER ${db_user}
+wp config set DB_PASSWORD ${db_password}
+wp config set DB_HOST ${db_endpoint}
+wp core install --url=${alb_dns}  --title="${owner} Website Title" --admin_user=admin --admin_password=admin --admin_email="admin@example.com"
