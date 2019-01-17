@@ -1,0 +1,8 @@
+owner = "participant-name"
+region = "eu-central-1"
+network = "10.0.0.0/25"
+subnet_bits = 3
+db_name = "wordpress_db"
+db_user = "admin"
+db_password = "adminpwd"
+state_bucket = "participant-name-state-randomnumber"
