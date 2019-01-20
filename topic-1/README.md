@@ -1,4 +1,4 @@
-# TBC
+# Topic-1: Inputs & Outputs
 
 **1.** Copy all .tf and .sh files from directory topic-1 to your working-dir:
 ```bash
@@ -14,8 +14,8 @@
  $ git commit -am "Topic 1 files"
 ```
 
-**3.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc.
-You need to execute *terraform init* each time you add new providers or change backend (more on that later). It's safe to run *terraform init* multiple times.
+**3.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc. 
+Note: in order to reduce space consumption and bandwidth usage already downloaded provider plugins could be referenced.
 
 ```bash
  $ terraform init
