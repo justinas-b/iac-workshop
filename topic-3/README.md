@@ -1,4 +1,4 @@
-# TBC
+# Topic-3: Templating & remote state
 
 **1.** Copy all .tf and .sh files from directory topic-3 to your working-dir:
 

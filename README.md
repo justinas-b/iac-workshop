@@ -37,7 +37,7 @@ subnet_bits = 3
 db_name = "wordpress_db"
 db_user = "admin"
 db_password = "adminpwd"
-state_bucket = "john-snow-state-74***********"
+state_bucket = "john-snow-state-<account_id>"
 ```
 Note that db_password should be at least 8 char length. 
 
