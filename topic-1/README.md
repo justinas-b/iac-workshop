@@ -1,6 +1,5 @@
 # Topic-1: Inputs & Outputs
 
-
 **1.** Copy all .tf and .sh files from directory topic-1 to your working-dir:
 ```bash
  $ cd working-dir
