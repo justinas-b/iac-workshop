@@ -23,24 +23,5 @@ You need to have:
    ```bash
     $ export AWS_PROFILE=iac-workshop-account 
    ```
-   
-
-
-### Provisioning
-In the directory **"working-dir"** create file terraform.tfvars with variables and appropriate values according to your account:
-
-```
-owner = "john-snow"
-region = "eu-central-1"
-network = "10.0.0.0/25"
-subnet_bits = 3
-db_name = "wordpress_db"
-db_user = "admin"
-db_password = "adminpwd"
-state_bucket = "john-snow-state-<account_id>"
-```
-Note that db_password should be at least 8 char length. 
-
-**DO NOT** commit your terraform.tfvars file to version control as it contains db_password value which is a sensitive data.
 
 Then follow the instructions in each topic.

@@ -1,6 +1,14 @@
 # Topic-3: Templating & remote state
 
-**1.** Copy all .tf and .sh files from directory topic-3 to your working-dir:
+**1.** Amend your *terraform.tfvars* file in *working-dir* and add the following variables:
+
+```bash
+db_name = "wordpress_db"
+db_user = "admin"
+db_password = "adminpwd"
+```
+
+**2.** Copy all .tf and .sh files from directory topic-3 to your working-dir:
 
 ```bash
 cp ../topic-3/*.tf ./
@@ -8,7 +16,7 @@ cp ../topic-3/*.sh ./
 
 ```
 
-**2.** Examine what has changed in which files and commit changes to your forked repository.
+**3.** Examine what has changed in which files and commit changes to your forked repository.
 
 ```bash
  $ git status
@@ -16,7 +24,7 @@ cp ../topic-3/*.sh ./
  $ git commit -am "Topic 3 files and changes"
 ```
 
-**3.** Since we've changed our terraform state backend from local to s3, this requires reinitialization. Execute *terraform init*. 
+**4.** Since we've changed our terraform state backend from local to s3, this requires reinitialization. Execute *terraform init*. 
 You'll be prompted with question if you want to copy state from "local" to "s3". Enter "yes". 
 
 ```bash
@@ -76,7 +84,7 @@ commands will detect it and remind you to do so if necessary.
 </details>
 </br>
 
-**4.** Create terraform plan and examine the output. 
+**5.** Create terraform plan and examine the output. 
 
  - How many resources are going to be created? Changed? Destroyed? 
  - Can you identify which resource/attribute change causes the re-provisioning of the resource? 
@@ -109,7 +117,7 @@ commands will detect it and remind you to do so if necessary.
 </details>
 </br>
 
-**5.** Apply the terraform plan.
+**6.** Apply the terraform plan.
 
 ```bash
  $ terraform apply
@@ -156,7 +164,7 @@ above and apply again to incrementally change your infrastructure.
 </details>
 </br>
 
-**6.** Oooops! Terraform failed to update launch configuration since it is attached to an autoscaling group. 
+**7.** Oooops! Terraform failed to update launch configuration since it is attached to an autoscaling group. 
 Let's take an easy approach and taint the autoscaling group. Tainting will indicate terraform to destroy and 
 reprovision this resource during next terraform run. 
 
@@ -187,7 +195,7 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
-**7.** Apply the terraform plan and examine the outputs.
+**8.** Apply the terraform plan and examine the outputs.
 
 ```bash
  $ terraform apply
@@ -224,5 +232,5 @@ vpc_id = vpc-0dc49a0686a231015
 </details>
 </br>
 
-**8.** In your browser open your application load balancer dns URL "alb_dns_name" from the outputs section and you should 
+**9.** In your browser open your application load balancer dns URL "alb_dns_name" from the outputs section and you should 
 see WordPres welcome page.
