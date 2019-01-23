@@ -8,12 +8,17 @@ db_user = "admin"
 db_password = "adminpwd"
 ```
 
-**2.** Copy all .tf and .sh files from directory topic-3 to your working-dir:
+Note that db_password should be at least 8 char length. 
+
+
+**DO NOT** commit your terraform.tfvars file to version control as it contains db_password value which is a sensitive data.
+
+**2.** Copy all .tf and .sh files from directory topic-3 to your working-dir as shown below and in *backend.tf* file specify bucket name
+that you've created in the *topic-0*.
 
 ```bash
 cp ../topic-3/*.tf ./
 cp ../topic-3/*.sh ./
-
 ```
 
 **3.** Examine what has changed in which files and commit changes to your forked repository.
@@ -103,14 +108,21 @@ commands will detect it and remind you to do so if necessary.
   [ Some output removed ]
  ...
  
- Plan: 7 to add, 1 to change, 1 to destroy.
+  ipv6_cidr_block_association_id:                                                           <computed>
+       map_public_ip_on_launch:                                                                  "false"
+       owner_id:                                                                                 <computed>
+       tags.%:                                                                                   "1"
+       tags.Name:                                                                                "private-db-john-snow-default-1"
+       vpc_id:                                                                                   "vpc-0379a7d432dcd362e"
+ 
+ 
+ Plan: 9 to add, 0 to change, 3 to destroy.
  
  ------------------------------------------------------------------------
  
  Note: You didn't specify an "-out" parameter to save this plan, so Terraform
  can't guarantee that exactly these actions will be performed if
  "terraform apply" is subsequently run.
- 
 
 ```
 </p>
@@ -141,83 +153,10 @@ aws_security_group.rds: Creating...
   [ Some output removed ]
  ...
  
-aws_db_instance.default: Creation complete after 4m3s (ID: arya-stark-default)
-data.template_file.init: Refreshing state...
+aws_launch_configuration.as_conf.deposed: Destroying... (ID: john-snow-lc-default)
+aws_launch_configuration.as_conf.deposed: Destruction complete after 0s
 
-Error: Error applying plan:
-
-1 error(s) occurred:
-
-* aws_launch_configuration.as_conf (destroy): 1 error(s) occurred:
-
-* aws_launch_configuration.as_conf: ResourceInUse: Cannot delete launch configuration arya-stark-lc-default because it is attached to AutoScalingGroup arya-stark-asg-default
-        status code: 400, request id: 3ed49642-141c-11e9-a5e8-47e4b055fdc9
-
-Terraform does not automatically rollback in the face of errors.
-Instead, your Terraform state file has been partially updated with
-any resources that successfully completed. Please address the error
-above and apply again to incrementally change your infrastructure.
-
- 
-```
-</p>
-</details>
-</br>
-
-**7.** Oooops! Terraform failed to update launch configuration since it is attached to an autoscaling group. 
-Let's take an easy approach and taint the autoscaling group. Tainting will indicate terraform to destroy and 
-reprovision this resource during next terraform run. 
-
-Taint the autoscaling group resource, create a plan and examine the output.
-
- - How many resources will be created/destroyed? Why?
- - Can you identify the tainted resource? 
-
-```bash
- $ terraform state list | grep asg
-aws_autoscaling_group.asg
-aws_security_group.asg
- $ terraform taint aws_autoscaling_group.asg
-The resource aws_autoscaling_group.asg in the module root has been marked as tainted!
- $ terraform plan
-
- ...
-  [ Some output removed ]
- ...
- 
-
-Plan: 2 to add, 0 to change, 2 to destroy.
-
-------------------------------------------------------------------------
-
-Note: You didn't specify an "-out" parameter to save this plan, so Terraform
-can't guarantee that exactly these actions will be performed if
-"terraform apply" is subsequently run.
-```
-
-**8.** Apply the terraform plan and examine the outputs.
-
-```bash
- $ terraform apply
-```
-
-<details><summary>Click here to expand for more details</summary>
-<p>
-
-
-```hcl-terraform
- ...
-  [ Some output removed ]
- ...
- 
-  wait_for_capacity_timeout:      "" => "10m"
-aws_autoscaling_group.asg: Still creating... (10s elapsed)
-aws_autoscaling_group.asg: Still creating... (20s elapsed)
-aws_autoscaling_group.asg: Still creating... (30s elapsed)
-aws_autoscaling_group.asg: Still creating... (40s elapsed)
-aws_autoscaling_group.asg: Creation complete after 45s (ID: arya-stark-asg-default)
-
-Apply complete! Resources: 2 added, 0 changed, 2 destroyed.
+Apply complete! Resources: 9 added, 0 changed, 3 destroyed.
 
 Outputs:
 
@@ -232,5 +171,6 @@ vpc_id = vpc-0dc49a0686a231015
 </details>
 </br>
 
-**9.** In your browser open your application load balancer dns URL "alb_dns_name" from the outputs section and you should 
-see WordPres welcome page.
+**7.** Copy and paste application load balancer dns URL "alb_dns_name" from the outputs section to your browser and you should 
+see WordPres welcome page. 
+

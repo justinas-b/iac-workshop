@@ -1,4 +1,4 @@
-# Topic-2: Bootstrapping: provisioners and user-data
+# Topic-2: Bootstrapping
 
 **1.** Copy all .tf and .sh files from directory topic-2 to your working-dir
 ```bash

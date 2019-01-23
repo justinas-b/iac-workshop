@@ -10,10 +10,6 @@ network = "10.0.0.0/25"
 subnet_bits = 3
 ```
 
-Note that db_password should be at least 8 char length. 
-
-**DO NOT** commit your terraform.tfvars file to version control as it contains db_password value which is a sensitive data.
-
 **2.** Copy all .tf and .sh files from directory topic-1 to your working-dir:
 ```bash
  $ cd working-dir
