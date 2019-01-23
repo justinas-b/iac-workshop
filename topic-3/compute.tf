@@ -41,21 +41,23 @@ data "template_file" "init" {
 }
 
 resource "aws_launch_configuration" "as_conf" {
-  name            = "${var.owner}-lc-${terraform.workspace}"
   image_id        = "${data.aws_ami.ami.id}"
   instance_type   = "t2.micro"
   user_data       = "${data.template_file.init.rendered}"
   security_groups = ["${aws_security_group.asg.id}"]
 
-  // Issue: https://github.com/hashicorp/terraform/issues/11349#issuecomment-437561823 
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_autoscaling_group" "asg" {
-  name                 = "${var.owner}-asg-${terraform.workspace}"
+  name                 = "${var.owner}-asg-${aws_launch_configuration.as_conf.name}"
   launch_configuration = "${aws_launch_configuration.as_conf.name}"
   min_size             = 0
   max_size             = 4
   desired_capacity     = 2
+  min_elb_capacity     = 2
   target_group_arns    = ["${aws_lb_target_group.alb_tg.arn}"]
   vpc_zone_identifier  = ["${local.compute_subnets}"]
 
@@ -69,6 +71,10 @@ resource "aws_autoscaling_group" "asg" {
     "GroupTerminatingInstances",
     "GroupTotalInstances",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_autoscaling_policy" "bat" {

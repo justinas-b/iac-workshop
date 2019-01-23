@@ -1,12 +1,22 @@
 # Topic-1: Inputs & Outputs
 
-**1.** Copy all .tf and .sh files from directory topic-1 to your working-dir:
+**1.** In the directory **"working-dir"** create file terraform.tfvars with variables and appropriate values according to your account. 
+For state bucket use the same bucket name that you've created in the topic-0.
+
+```
+owner = "john-snow"
+region = "eu-central-1"
+network = "10.0.0.0/25"
+subnet_bits = 3
+```
+
+**2.** Copy all .tf and .sh files from directory topic-1 to your working-dir:
 ```bash
  $ cd working-dir
  $ cp ../topic-1/*.tf ./
 ```
 
-**2.** Examine the contents of the copied files and commit them to your forked repository.
+**3.** Examine the contents of the copied files and commit them to your forked repository.
 
 ```bash
  $ git status
@@ -14,7 +24,8 @@
  $ git commit -am "Topic 1 files"
 ```
 
-**3.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc. 
+
+**4.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc. 
 Note: in order to reduce space consumption and bandwidth usage already downloaded provider plugins could be referenced.
 
 ```bash
@@ -54,7 +65,7 @@ commands will detect it and remind you to do so if necessary.
 </details>
 </br>
 
-**4.** Create a terraform plan by executing:
+**5.** Create a terraform plan by executing:
 
 ```bash
  $ terraform plan
@@ -114,7 +125,7 @@ Terraform will perform the following actions:
 </details>
 </br>
 
-**5.** Apply terraform plan by executing:
+**6.** Apply terraform plan by executing:
 
 ```bash
  $ terraform apply

@@ -108,7 +108,7 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 </details>
 </br>
 
-**4.** Apply terraform plan by executing:
+**4.** Apply terraform plan by executing command below. Enter 'yes' when prompted.
 
 ```bash
  $ terraform apply
