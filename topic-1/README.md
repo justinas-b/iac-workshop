@@ -24,6 +24,7 @@ subnet_bits = 3
  $ git commit -am "Topic 1 files"
 ```
 
+
 **4.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc. 
 Note: in order to reduce space consumption and bandwidth usage already downloaded provider plugins could be referenced.
 
