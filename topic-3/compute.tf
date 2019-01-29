@@ -99,6 +99,16 @@ resource "aws_lb_target_group" "alb_tg" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = "${aws_vpc.main.id}"
+
+  health_check {
+    interval            = 10
+    path                = "/"
+    healthy_threshold   = 2
+    unhealthy_threshold = 5
+    timeout             = 5
+    protocol            = "HTTP"
+    matcher             = "200,302"
+  }
 }
 
 resource "aws_lb" "load_balancer" {
