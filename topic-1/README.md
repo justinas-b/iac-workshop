@@ -1,4 +1,4 @@
-# Topic-1: Inputs & Outputs
+# Topic-1: Input variables & outputs
 
 **1.** In the directory **"working-dir"** create file terraform.tfvars with variables and appropriate values according to your account. 
 For state bucket use the same bucket name that you've created in the topic-0.
