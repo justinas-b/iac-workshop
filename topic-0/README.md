@@ -146,7 +146,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 </details>
 </br>
 
-**5.** You should see additional files *terraform.tfstate* and *terraform.tfstate.backup* created in your directory. 
+**5.** You should see additional file *terraform.tfstate* created in your directory. 
 State file maps the resources defined in *.tf files with the actual resources in the cloud service provider, in our case AWS. 
 
 ```bash
@@ -157,7 +157,6 @@ drwxr-xr-x  16 Ignas  staff   512 Jan 20 12:04 ..
 drwxr-xr-x   4 Ignas  staff   128 Jan 20 12:06 .terraform
 -rw-r--r--   1 Ignas  staff   173 Jan 20 12:16 bucket.tf
 -rw-r--r--   1 Ignas  staff  2087 Jan 20 12:17 terraform.tfstate
--rw-r--r--   1 Ignas  staff   318 Jan 20 12:16 terraform.tfstate.backup
 ```
 
 **DO NOT** modify state file manually. It's a lot safer to use built in commands. For example, you can execute the following
