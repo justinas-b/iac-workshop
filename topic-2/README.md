@@ -10,9 +10,9 @@ cp ../topic-2/*.sh ./
 **2.** Examine what has changed in which files and commit changes to your forked repository.
 
 ```bash
- $ git status
- $ git diff <path_to_file>
- $ git commit -am "Topic 2 files and changes"
+ git status
+ git diff <path_to_file>
+ git commit -am "Topic 2 files and changes"
 ```
 
 **3.** Execute terraform plan. Since we've added a new provider, you'll get an error similar as below. 
@@ -62,7 +62,7 @@ terraform init
 <p>
 
 ```
-) $ terraform init
+$ terraform init
 
 Initializing provider plugins...
 - Checking for available provider plugins on https://releases.hashicorp.com...
@@ -97,8 +97,8 @@ commands will detect it and remind you to do so if necessary.
 **5.** Execute terraform plan, examine what changes are going to be made and then apply.
 
 ```bash
- $ terraform plan
- $ terraform apply
+ terraform plan
+ terraform apply
 
 ```
 
