@@ -12,16 +12,16 @@ subnet_bits = 3
 
 **2.** Copy all .tf and .sh files from directory topic-1 to your working-dir:
 ```bash
- $ cd working-dir
- $ cp ../topic-1/*.tf ./
+ cd working-dir
+ cp ../topic-1/*.tf ./
 ```
 
 **3.** Examine the contents of the copied files and commit them to your forked repository.
 
 ```bash
- $ git status
- $ git diff
- $ git commit -am "Topic 1 files"
+ git status
+ git diff
+ git commit -am "Topic 1 files"
 ```
 
 
@@ -29,7 +29,7 @@ subnet_bits = 3
 Note: in order to reduce space consumption and bandwidth usage already downloaded provider plugins could be referenced.
 
 ```bash
- $ terraform init
+ terraform init
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -68,7 +68,7 @@ commands will detect it and remind you to do so if necessary.
 **5.** Create a terraform plan by executing:
 
 ```bash
- $ terraform plan
+ terraform plan
 ```
 
 Examine the produced output. 
@@ -128,7 +128,7 @@ Terraform will perform the following actions:
 **6.** Apply terraform plan by executing:
 
 ```bash
- $ terraform apply
+ terraform apply
 ```
 
 Examine the produced output. 
