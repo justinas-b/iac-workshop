@@ -132,7 +132,7 @@ commands will detect it and remind you to do so if necessary.
 **6.** Apply the terraform plan.
 
 ```bash
- $ terraform apply
+ terraform apply
 ```
 
 <details><summary>Click here to expand for more details</summary>
