@@ -24,16 +24,16 @@ cp ../topic-3/*.sh ./
 **3.** Examine what has changed in which files and commit changes to your forked repository.
 
 ```bash
- $ git status
- $ git diff <path_to_file>
- $ git commit -am "Topic 3 files and changes"
+ git status
+ git diff <path_to_file>
+ git commit -am "Topic 3 files and changes"
 ```
 
 **4.** Since we've changed our terraform state backend from local to s3, this requires reinitialization. Execute *terraform init*. 
 You'll be prompted with question if you want to copy state from "local" to "s3". Enter "yes". 
 
 ```bash
- $ terraform init
+ terraform init
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -95,7 +95,7 @@ commands will detect it and remind you to do so if necessary.
  - Can you identify which resource/attribute change causes the re-provisioning of the resource? 
  
  ```bash
- $ terraform plan
+ terraform plan
 ```
 
 <details><summary>Click here to expand for more details</summary>
