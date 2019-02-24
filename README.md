@@ -21,7 +21,7 @@ You need to have:
    
    - Set environment variable for your new aws profile:
    ```bash
-   export AWS_PROFILE=iac-workshop-account 
+    export AWS_PROFILE=iac-workshop-account 
    ```
 
 Then follow the instructions in each topic.

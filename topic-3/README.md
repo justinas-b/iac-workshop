@@ -3,9 +3,9 @@
 **1.** Amend your **terraform.tfvars** file in *working-dir* and add the following variables:
 
 ```bash
-db_name = "wordpress_db"
-db_user = "admin"
-db_password = "adminpwd"
+ db_name = "wordpress_db"
+ db_user = "admin"
+ db_password = "adminpwd"
 ```
 
 Note that db_password should be at least 8 char length. 
@@ -17,23 +17,23 @@ Note that db_password should be at least 8 char length.
 that you've created in the *topic-0*.
 
 ```bash
-cp ../topic-3/*.tf ./
-cp ../topic-3/*.sh ./
+ cp ../topic-3/*.tf ./
+ cp ../topic-3/*.sh ./
 ```
 
 **3.** Examine what has changed in which files and commit changes to your forked repository.
 
 ```bash
-git status
-git diff <path_to_file>
-git commit -am "Topic 3 files and changes"
+ git status
+ git diff <path_to_file>
+ git commit -am "Topic 3 files and changes"
 ```
 
 **4.** Since we've changed our terraform state backend from local to s3, this requires reinitialization. Execute *terraform init*. 
 You'll be prompted with question if you want to copy state from "local" to "s3". Enter "yes". 
 
 ```bash
-terraform init
+ terraform init
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -94,8 +94,8 @@ commands will detect it and remind you to do so if necessary.
  - How many resources are going to be created? Changed? Destroyed? 
  - Can you identify which resource/attribute change causes the re-provisioning of the resource? 
  
- ```bash
-terraform plan
+```bash
+ terraform plan
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -132,7 +132,7 @@ terraform plan
 **6.** Apply the terraform plan.
 
 ```bash
-terraform apply
+ terraform apply
 ```
 
 <details><summary>Click here to expand for more details</summary>
