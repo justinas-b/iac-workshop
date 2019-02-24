@@ -3,9 +3,9 @@
 **1.** Amend your **terraform.tfvars** file in *working-dir* and add the following variables:
 
 ```bash
-db_name = "wordpress_db"
-db_user = "admin"
-db_password = "adminpwd"
+ db_name = "wordpress_db"
+ db_user = "admin"
+ db_password = "adminpwd"
 ```
 
 Note that db_password should be at least 8 char length. 
