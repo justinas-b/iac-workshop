@@ -1,7 +1,12 @@
 # Topic-1: Input variables & outputs
 
-**1.** In the directory **"working-dir"** create file terraform.tfvars with variables and appropriate values according to your account. 
-For state bucket use the same bucket name that you've created in the topic-0.
+**1.** In your terminal change directory to **"working-dir"**. From this topic onwards we are going to execute all commands **only** in this directory. 
+
+```bash
+cd ../working-dir
+```
+
+In this directory create file terraform.tfvars and paste the below contents. 
 
 ```
 owner = "john-snow"
@@ -10,26 +15,25 @@ network = "10.0.0.0/25"
 subnet_bits = 3
 ```
 
-**2.** Copy all .tf and .sh files from directory topic-1 to your working-dir:
+**2.** Copy all **.tf** files from directory **topic-1** to your **working-dir**:
 ```bash
- $ cd working-dir
- $ cp ../topic-1/*.tf ./
+cp ../topic-1/*.tf ./
 ```
 
 **3.** Examine the contents of the copied files and commit them to your forked repository.
 
 ```bash
- $ git status
- $ git diff
- $ git commit -am "Topic 1 files"
+git status
+git diff
+git commit -am "Topic 1 files"
 ```
 
 
-**4.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc. 
+**4.** Execute *terraform init* command. This command initializes various local settings, downloads required provider plugins, etc. 
 Note: in order to reduce space consumption and bandwidth usage already downloaded provider plugins could be referenced.
 
 ```bash
- $ terraform init
+terraform init
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -68,7 +72,7 @@ commands will detect it and remind you to do so if necessary.
 **5.** Create a terraform plan by executing:
 
 ```bash
- $ terraform plan
+terraform plan
 ```
 
 Examine the produced output. 
@@ -125,10 +129,12 @@ Terraform will perform the following actions:
 </details>
 </br>
 
-**6.** Apply terraform plan by executing:
+**6.** Apply terraform plan by executing "terraform apply". When prompted for confirmation enter "yes".
+
+Interactive plan confirmation can be skipped (**NOT RECOMMENDED** for production workloads) by adding **"-auto-approve"** flag. 
 
 ```bash
- $ terraform apply
+terraform apply -auto-approve
 ```
 
 Examine the produced output. 
@@ -171,3 +177,12 @@ vpc_id = vpc-0dc49a0686a231015
 </p>
 </details>
 </br>
+
+**7.** You can list and inspect resources from the state file by executing commands below:
+```bash
+terraform state list
+terraform state show <RESOURCE_TYPE.NAME>
+
+```
+
+As you can see from the list of resources, terraform has provisioned all the required networking baseline as expected.

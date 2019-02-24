@@ -1,6 +1,6 @@
 # Topic-3: Templating & remote state
 
-**1.** Amend your *terraform.tfvars* file in *working-dir* and add the following variables:
+**1.** Amend your **terraform.tfvars** file in *working-dir* and add the following variables:
 
 ```bash
 db_name = "wordpress_db"
@@ -24,16 +24,16 @@ cp ../topic-3/*.sh ./
 **3.** Examine what has changed in which files and commit changes to your forked repository.
 
 ```bash
- $ git status
- $ git diff <path_to_file>
- $ git commit -am "Topic 3 files and changes"
+git status
+git diff <path_to_file>
+git commit -am "Topic 3 files and changes"
 ```
 
 **4.** Since we've changed our terraform state backend from local to s3, this requires reinitialization. Execute *terraform init*. 
 You'll be prompted with question if you want to copy state from "local" to "s3". Enter "yes". 
 
 ```bash
- $ terraform init
+terraform init
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -95,14 +95,14 @@ commands will detect it and remind you to do so if necessary.
  - Can you identify which resource/attribute change causes the re-provisioning of the resource? 
  
  ```bash
- $ terraform plan
+terraform plan
 ```
 
 <details><summary>Click here to expand for more details</summary>
 <p>
 
 ```hcl-terraform
- $ terraform plan
+terraform plan
  
  ...
   [ Some output removed ]
@@ -132,7 +132,7 @@ commands will detect it and remind you to do so if necessary.
 **6.** Apply the terraform plan.
 
 ```bash
- $ terraform apply
+terraform apply
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -171,6 +171,7 @@ vpc_id = vpc-0dc49a0686a231015
 </details>
 </br>
 
-**7.** Copy and paste application load balancer dns URL "alb_dns_name" from the outputs section to your browser and you should 
-see WordPres welcome page. 
+**7.** Copy and paste application load balancer dns URL **alb_dns_name** from the outputs section to your browser and you should 
+see WordPress welcome page with the **"owner"** value reference at the top similar as in the below screenshot.
 
+![WordPressHomepage](https://github.com/AmazingStuffPro/iac-workshop/blob/master/_docs/wp_homepage.png?raw=true)
