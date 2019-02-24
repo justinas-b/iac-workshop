@@ -1,6 +1,7 @@
 # Topic-0: Terraform intro
 
 **1.** If you are not already, with terminal **change directory to *topic-0***. In the **bucket.tf** file there is **aws_s3_bucket** resource block. Change bucket name to something unique. 
+
 In order to maintain uniqueness an example naming convention has been proposed. 
 Change bucket name accordingly.
 
@@ -9,7 +10,7 @@ You need to execute *terraform init* each time you add new providers or change b
 It's safe to run *terraform init* multiple times.
 
 ```bash
-terraform init
+ terraform init
 ```
 
 
@@ -49,7 +50,7 @@ commands will detect it and remind you to do so if necessary.
 **3.** Create a terraform plan by executing:
 
 ```bash
-terraform plan
+ terraform plan
 ```
 
 Examine the produced output. 
@@ -111,7 +112,7 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 **4.** Apply terraform plan by executing command below. Enter 'yes' when prompted.
 
 ```bash
-terraform apply
+ terraform apply
 ```
 
 Examine the produced output. 
@@ -163,10 +164,10 @@ drwxr-xr-x   4 Ignas  staff   128 Jan 20 12:06 .terraform
 commands to list and examine particular resource:
 
 ```bash
-$ terraform state list
+terraform state list
 aws_s3_bucket.state_bucket
 
-$ terraform state show aws_s3_bucket.state_bucket
+terraform state show aws_s3_bucket.state_bucket
 id                                     = johnn-snow-state-437278685207
 acceleration_status                    = 
 acl                                    = private
