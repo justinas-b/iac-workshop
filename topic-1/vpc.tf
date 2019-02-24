@@ -4,11 +4,11 @@ provider "aws" {
 
 # Some local variables
 locals {
-  generic_tag  = "${var.owner}-${terraform.workspace}"
+  generic_tag = "${var.owner}-${terraform.workspace}"
 
   # Public and private subnet count for frontend, app and data tiers
-  public_subnet_count  = 2
-  private_subnet_count = 2
+  public_subnet_count     = 2
+  private_subnet_count    = 2
   private_db_subnet_count = 2
 
   # We'll be using only "a" and "b" AZs for target region

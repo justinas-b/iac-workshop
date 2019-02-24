@@ -3,7 +3,7 @@
 **1.** In your terminal change directory to **"working-dir"**. From this topic onwards we are going to execute all commands **only** in this directory. 
 
 ```bash
-cd ../working-dir
+ cd ../working-dir
 ```
 
 In this directory create file terraform.tfvars and paste the below contents. 
@@ -17,15 +17,15 @@ subnet_bits = 3
 
 **2.** Copy all **.tf** files from directory **topic-1** to your **working-dir**:
 ```bash
-cp ../topic-1/*.tf ./
+ cp ../topic-1/*.tf ./
 ```
 
 **3.** Examine the contents of the copied files and commit them to your forked repository.
 
 ```bash
-git status
-git diff
-git commit -am "Topic 1 files"
+ git status
+ git diff
+ git commit -am "Topic 1 files"
 ```
 
 
@@ -33,7 +33,7 @@ git commit -am "Topic 1 files"
 Note: in order to reduce space consumption and bandwidth usage already downloaded provider plugins could be referenced.
 
 ```bash
-terraform init
+ terraform init
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -72,7 +72,7 @@ commands will detect it and remind you to do so if necessary.
 **5.** Create a terraform plan by executing:
 
 ```bash
-terraform plan
+ terraform plan
 ```
 
 Examine the produced output. 
@@ -134,7 +134,7 @@ Terraform will perform the following actions:
 Interactive plan confirmation can be skipped (**NOT RECOMMENDED** for production workloads) by adding **"-auto-approve"** flag. 
 
 ```bash
-terraform apply -auto-approve
+ terraform apply -auto-approve
 ```
 
 Examine the produced output. 
@@ -180,9 +180,10 @@ vpc_id = vpc-0dc49a0686a231015
 
 **7.** You can list and inspect resources from the state file by executing commands below:
 ```bash
-terraform state list
-terraform state show <RESOURCE_TYPE.NAME>
+ terraform state list
+ terraform state show <RESOURCE_TYPE.NAME>
 
 ```
 
 As you can see from the list of resources, terraform has provisioned all the required networking baseline as expected.
+
