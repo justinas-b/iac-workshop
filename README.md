@@ -13,7 +13,7 @@ You need to have:
  - Terraform in your path, AWS account and credentials set in order to provision target infra.
    - Create a separate aws profile in your *~/.aws/credentials* file if this is not your default credentials:
    ```bash
-     $ cat ~/.aws/credentials   
+    cat ~/.aws/credentials   
     [iac-workshop-account]
     aws_access_key_id = ******************
     aws_secret_access_key = *************************************
