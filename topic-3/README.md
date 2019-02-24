@@ -132,19 +132,13 @@ terraform plan
 **6.** Apply the terraform plan.
 
 ```bash
- terraform apply
+ terraform apply -auto-approve
 ```
 
 <details><summary>Click here to expand for more details</summary>
 <p>
 
 ```hcl-terraform
-Do you want to perform these actions?
-  Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
-
-  Enter a value: yes
-
 aws_launch_configuration.as_conf: Destroying... (ID: arya-stark-lc-default)
 aws_security_group.rds: Creating...
   arn:                    "" => "<computed>"
