@@ -1,10 +1,9 @@
 # Topic-2: Bootstrapping
 
-**1.** Copy all .tf and .sh files from directory topic-2 to your working-dir
+**1.** Copy all .tf and .sh files from directory topic-2 to your working-dir.
 ```bash
-cp ../topic-2/*.tf ./
-cp ../topic-2/*.sh ./
-
+ cp ../topic-2/*.tf ./
+ cp ../topic-2/*.sh ./
 ```
 
 **2.** Examine what has changed in which files and commit changes to your forked repository.
@@ -18,7 +17,7 @@ cp ../topic-2/*.sh ./
 **3.** Execute terraform plan. Since we've added a new provider, you'll get an error similar as below. 
 
 ```bash
-terraform plan
+ terraform plan
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -55,7 +54,7 @@ Error: error satisfying plugin requirements
 add new providers or change backend (more on that later). It's safe to run *terraform init* multiple times.
 
 ```bash
-terraform init
+ terraform init
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -99,7 +98,6 @@ commands will detect it and remind you to do so if necessary.
 ```bash
  terraform plan
  terraform apply
-
 ```
 
 <details><summary>Click here to expand for more details</summary>
@@ -176,3 +174,5 @@ vpc_id = vpc-0faf9cf26d5246000
 
 You'll see Wordpress initial setup page to for database connection. However, currently we don't have a database to connect to. 
 We'll resolve this in the next lesson/topic :)
+
+

@@ -1,11 +1,11 @@
 # Topic-3: Templating & remote state
 
-**1.** Amend your *terraform.tfvars* file in *working-dir* and add the following variables:
+**1.** Amend your **terraform.tfvars** file in *working-dir* and add the following variables:
 
 ```bash
-db_name = "wordpress_db"
-db_user = "admin"
-db_password = "adminpwd"
+ db_name = "wordpress_db"
+ db_user = "admin"
+ db_password = "adminpwd"
 ```
 
 Note that db_password should be at least 8 char length. 
@@ -17,8 +17,8 @@ Note that db_password should be at least 8 char length.
 that you've created in the *topic-0*.
 
 ```bash
-cp ../topic-3/*.tf ./
-cp ../topic-3/*.sh ./
+ cp ../topic-3/*.tf ./
+ cp ../topic-3/*.sh ./
 ```
 
 **3.** Examine what has changed in which files and commit changes to your forked repository.
@@ -94,7 +94,7 @@ commands will detect it and remind you to do so if necessary.
  - How many resources are going to be created? Changed? Destroyed? 
  - Can you identify which resource/attribute change causes the re-provisioning of the resource? 
  
- ```bash
+```bash
  terraform plan
 ```
 
@@ -102,7 +102,7 @@ commands will detect it and remind you to do so if necessary.
 <p>
 
 ```hcl-terraform
- $ terraform plan
+terraform plan
  
  ...
   [ Some output removed ]
@@ -171,6 +171,7 @@ vpc_id = vpc-0dc49a0686a231015
 </details>
 </br>
 
-**7.** Copy and paste application load balancer dns URL "alb_dns_name" from the outputs section to your browser and you should 
-see WordPres welcome page. 
+**7.** Copy and paste application load balancer dns URL **alb_dns_name** from the outputs section to your browser and you should 
+see WordPress welcome page with the **"owner"** value reference at the top similar as in the below screenshot.
 
+![WordPressHomepage](https://github.com/AmazingStuffPro/iac-workshop/blob/master/_docs/wp_homepage.png?raw=true)

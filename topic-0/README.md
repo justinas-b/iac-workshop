@@ -1,7 +1,7 @@
 # Topic-0: Terraform intro
 
-**1.** If you are not already, with terminal cd to *topic-0* directory. Change bucket name to something unique. 
-In order to maintain uniqueness an example naming convention has been proposed with an example. 
+**1.** If you are not already, with terminal **change directory to *topic-0***. In the **bucket.tf** file there is **aws_s3_bucket** resource block. Change bucket name to something unique. 
+In order to maintain uniqueness an example naming convention has been proposed. 
 Change bucket name accordingly.
 
 **2.** Execute *terraform init*. This command initializes various local settings, downloads required provider plugins, etc.
@@ -9,7 +9,7 @@ You need to execute *terraform init* each time you add new providers or change b
 It's safe to run *terraform init* multiple times.
 
 ```bash
- $ terraform init
+terraform init
 ```
 
 
@@ -49,7 +49,7 @@ commands will detect it and remind you to do so if necessary.
 **3.** Create a terraform plan by executing:
 
 ```bash
- $ terraform plan
+terraform plan
 ```
 
 Examine the produced output. 
@@ -111,7 +111,7 @@ Plan: 1 to add, 0 to change, 0 to destroy.
 **4.** Apply terraform plan by executing command below. Enter 'yes' when prompted.
 
 ```bash
- $ terraform apply
+terraform apply
 ```
 
 Examine the produced output. 
@@ -150,7 +150,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 State file maps the resources defined in *.tf files with the actual resources in the cloud service provider, in our case AWS. 
 
 ```bash
-$ ls -al
+ls -al
 total 32
 drwxr-xr-x   7 Ignas  staff   224 Jan 20 12:17 .
 drwxr-xr-x  16 Ignas  staff   512 Jan 20 12:04 ..
@@ -163,9 +163,10 @@ drwxr-xr-x   4 Ignas  staff   128 Jan 20 12:06 .terraform
 commands to list and examine particular resource:
 
 ```bash
- $ terraform state list
+$ terraform state list
 aws_s3_bucket.state_bucket
- $ terraform state show aws_s3_bucket.state_bucket
+
+$ terraform state show aws_s3_bucket.state_bucket
 id                                     = johnn-snow-state-437278685207
 acceleration_status                    = 
 acl                                    = private
@@ -200,7 +201,7 @@ since it hasn't been defined in terraform configuration (we've added it manually
 <p>
 
 ```bash
- $ terraform plan
+terraform plan
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
 persisted to local or remote state storage.
@@ -242,7 +243,7 @@ to the desired configuration.
 <p>
 
 ```bash
- $ terraform apply
+terraform apply
 aws_s3_bucket.state_bucket: Refreshing state... (ID: johnn-snow-state-437278685207)
 
 An execution plan has been generated and is shown below.
