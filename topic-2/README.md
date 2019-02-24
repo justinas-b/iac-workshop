@@ -97,7 +97,7 @@ commands will detect it and remind you to do so if necessary.
 
 ```bash
  terraform plan
- terraform apply
+ terraform apply -auto-approve
 ```
 
 <details><summary>Click here to expand for more details</summary>
