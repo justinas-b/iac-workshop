@@ -6,7 +6,7 @@
  cd ../working-dir
 ```
 
-In this directory create file terraform.tfvars and paste the below contents. 
+In this directory create file **terraform.tfvars** and paste the below contents. 
 
 ```
 owner = "john-snow"

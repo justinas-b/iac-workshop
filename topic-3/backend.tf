@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    bucket  = "john-snow-state-437278685207"
+    bucket  = "change-me"
     key     = "workshop/all-in-one/terraform.tfstate"
     region  = "eu-central-1"
     encrypt = true

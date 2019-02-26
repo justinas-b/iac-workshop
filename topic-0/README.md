@@ -1,7 +1,12 @@
 # Topic-0: Terraform intro
 
-**1.** If you are not already, with terminal **change directory to *topic-0***. In the **bucket.tf** file there is **aws_s3_bucket** resource block. Change bucket name to something unique. 
+**1.** If you are not already, with terminal **change directory to *topic-0***. 
 
+```bash
+ cd ../topic-0
+```
+
+In the **bucket.tf** file there is **aws_s3_bucket** resource block. Change bucket name to something unique. 
 In order to maintain uniqueness an example naming convention has been proposed. 
 Change bucket name accordingly.
 
