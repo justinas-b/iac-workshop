@@ -166,6 +166,9 @@ vpc_id = vpc-0dc49a0686a231015
 </br>
 
 **7.** Copy and paste application load balancer dns URL **alb_dns_name** from the outputs section to your browser and you should 
-see WordPress welcome page with the **"owner"** value reference at the top similar as in the below screenshot.
+see WordPress welcome page with the **"owner"** value reference at the top similar as in the below screenshot. 
 
 ![WordPressHomepage](https://github.com/AmazingStuffPro/iac-workshop/blob/master/_docs/wp_homepage.png?raw=true)
+
+This concludes our workshop, congratulations for making this far! Be aware that we've covered only the terraform basics
+and IaC with terraform is capable of much more than that. 

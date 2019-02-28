@@ -3,7 +3,7 @@
 **1.** If you are not already, with terminal **change directory to *topic-0***. 
 
 ```bash
- cd ../topic-0
+ cd ./topic-0
 ```
 
 In the **bucket.tf** file there is **aws_s3_bucket** resource block. Change bucket name to something unique. 
