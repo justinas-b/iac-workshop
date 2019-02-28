@@ -5,7 +5,7 @@ provider "aws" {
 resource "aws_s3_bucket" "state_bucket" {
   //  Suggested naming standard: <PARTICIPANT-USERNAME>-state-<ACCOUNT_ID>
   //  Example: johnn-snow-state-437278685207
-  bucket = "CHANGE-ME"
+  bucket = "topic-one-state-017824814810"
 
   acl = "private"
 
