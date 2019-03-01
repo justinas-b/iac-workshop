@@ -77,6 +77,19 @@ resource "aws_nat_gateway" "ngw" {
   }
 }
 
+// Private type subnets for database
+resource "aws_subnet" "db_private" {
+  count                   = "${local.private_db_subnet_count}"
+  vpc_id                  = "${aws_vpc.main.id}"
+  cidr_block              = "${cidrsubnet("${var.network}", "${var.subnet_bits}", count.index + 4)}"
+  map_public_ip_on_launch = false
+  availability_zone       = "${element("${local.azs}", "${count.index}")}"
+
+  tags {
+    Name = "private-db-${local.generic_tag}-${count.index}"
+  }
+}
+
 //-----------------------------------------
 // Public subnet routing 
 //-----------------------------------------

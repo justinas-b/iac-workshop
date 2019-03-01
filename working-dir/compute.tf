@@ -30,6 +30,15 @@ data "aws_ami" "ami" {
 
 data "template_file" "init" {
   template = "${file("${path.module}/user_data.sh")}"
+
+  vars {
+    db_endpoint = "${aws_db_instance.default.address}"
+    db_name     = "${var.db_name}"
+    db_user     = "${var.db_user}"
+    db_password = "${var.db_password}"
+    alb_dns     = "${aws_lb.load_balancer.dns_name}"
+    owner       = "${var.owner}"
+  }
 }
 
 resource "aws_launch_configuration" "as_conf" {
